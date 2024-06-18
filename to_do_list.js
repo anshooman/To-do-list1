@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function addtask(e){
     if(inputBox.value===''|| dateinput.value===''||  timeinput.value===''){
         alert("Please fill all the fields");
-        e.preventDefault()
+        return
 
     }
     else{
