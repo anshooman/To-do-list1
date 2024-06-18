@@ -8,9 +8,11 @@ document.addEventListener("DOMContentLoaded", function() {
     dateInput.setAttribute('min', today);
 });
 
-function addtask(){
-    if(inputBox.value===''|| dateinput.value===''|| timeinput.value===''){
-        alert("Please enter complete details");
+function addtask(e){
+    if(inputBox.value===''|| dateinput.value===''||  timeinput.value===''){
+        alert("Please fill all the fields");
+        e.preventDefault()
+
     }
     else{
         let li = document.createElement("li");
@@ -40,16 +42,28 @@ listContainer.addEventListener("click",function(e){
     }
     
     savedata();
-    
+
 },false);
+
+// Add event listener for double-click to make li editable
+listContainer.addEventListener("dblclick", function(e) {
+    if (e.target.tagName === "LI") {
+        e.target.setAttribute("contenteditable", "true");
+        e.target.focus();
+    }
+});
+
+// Add event listener for when the user presses Enter to finish editing the li
+listContainer.addEventListener("keydown", function(e) {
+    if (e.target.tagName === "LI" && e.key === "Enter") {
+        e.preventDefault(); // Prevents the default action of Enter key, which is to create a new line
+        e.target.removeAttribute("contenteditable");
+        savedata();
+    }
+});
 
 function savedata(){
     localStorage.setItem("data",listContainer.innerHTML);
 }
-
-function showTask(){
-    listContainer.innerHTML=localStorage.getItem("data");
-}
-showTask();
 
 
